@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class T_result {
-    private int tr_id;
+    private String tr_id;
     private int tr_utwid;
     private String tr_uip;
     private String tr_uid;
