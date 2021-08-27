@@ -5,16 +5,19 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-@Service
+@RestController
 public class KafkaController {
 
     @Resource
     private KafkaTemplate<String, Object> kafkaTemplate;
 
 
+    @RequestMapping("/topic1")
     public String sendToTopic1(String message) {
         kafkaTemplate.send("topic1", message).addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
@@ -30,6 +33,7 @@ public class KafkaController {
         return message;
     }
 
+    @RequestMapping("/topic2")
     public String sendToTopic2(String message) {
         kafkaTemplate.send("topic2", message).addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
