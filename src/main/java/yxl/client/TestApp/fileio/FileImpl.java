@@ -25,8 +25,8 @@ public class FileImpl {
         return createFile.createFile(filename);
     }
 
-    public List<String> readFile(File file) {
-        return readFile.readFile(file);
+    public List<String> readFile(String filename) {
+        return readFile.readFile(filename);
     }
 
     public boolean writeFile(File f, String data) {

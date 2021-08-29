@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import yxl.client.TestApp.Kafka.KafkaController;
 import yxl.client.TestApp.ProtocolAdapter.ProtocolAdapter;
 import yxl.client.TestApp.Util.GsonUtil;
+import yxl.client.TestApp.Util.TlUserUtil;
 import yxl.client.TestApp.entity.T_result;
 import yxl.client.TestApp.entity.Task;
 import yxl.client.TestApp.entity.User;
@@ -50,7 +51,6 @@ public class MyRunnable implements Runnable {
 
     @Override
     public void run() {
-        ThreadLocal<User> tUser = new ThreadLocal<>();
         InetAddress isa = null;
         try {
             isa = InetAddress.getLocalHost();
@@ -75,7 +75,7 @@ public class MyRunnable implements Runnable {
                 tResult.setTr_id(utw.getUtw_utid());
                 tResult.setTr_utwid(utw.getUtw_id());
                 tResult.setTr_uip(isa != null ? isa.getHostAddress() : null);
-                tResult.setTr_uid(tUser.get().getU_id());
+                tResult.setTr_uid(TlUserUtil.getThreadLocal().getU_id());
                 tResult.setTr_code(data.length());
                 tResult.setTr_isSuccess(data.length() != 0);
                 tResult.setTr_target(task.getT_target());

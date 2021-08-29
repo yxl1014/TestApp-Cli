@@ -1,12 +1,12 @@
 package yxl.client.TestApp.Net;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import yxl.client.TestApp.Util.JWTUtil;
+import yxl.client.TestApp.fileio.FileImpl;
 
 import javax.json.JsonObject;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +17,8 @@ public class RequestToServer {
     private static final String _URL = "http://localhost:8080/";
     /*public static String userToken = null;
     public static String problemName = null;*/
+    @Autowired
+    private FileImpl file;
 
     public String sendPost(String sufUrl, int num, String data) {
         DataOutputStream out = null;
@@ -32,6 +34,9 @@ public class RequestToServer {
             connection.setInstanceFollowRedirects(true);
             connection.setRequestMethod("POST"); // 设置请求方式
             connection.setRequestProperty("Connection", "Keep-Alive");
+            if(!sufUrl.equals("login")||!sufUrl.equals("logon")){
+                connection.setRequestProperty("token", file.readFile("user_token.txt").get(0));
+            }
             connection.connect();
             out = new DataOutputStream(connection.getOutputStream());
             // 发送请求参数，防止中文乱码

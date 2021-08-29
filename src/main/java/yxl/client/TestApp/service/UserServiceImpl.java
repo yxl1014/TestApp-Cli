@@ -19,7 +19,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl {
     private LocalList<Task> tasks;
-    private LocalList<Ut> uts;
+    private LocalList<Task> prod_tasks;
+    private LocalList<Task> cons_tasks;
 
     @Autowired
     private RequestToServer toServer;
@@ -56,31 +57,77 @@ public class UserServiceImpl {
     }
 
     public String init_main() {
-        if (this.tasks!=null){
+        if (this.tasks != null) {
             return GsonUtil.toJson(this.tasks.getTasks());
         }
         //向服务端发送请求，获取返回信息
-        String result=toServer.sendPost("init",2,"");
+        String result = toServer.sendPost("init", 2, "");
         Result rsl = GsonUtil.fromJson(result, Result.class);
-        List<Task> tasks=GsonUtil.list_TaskfromJson(rsl.getData());
+        List<Task> tasks = GsonUtil.list_TaskfromJson(rsl.getData());
         //将所有task存本地
-        this.tasks=new LocalList<>(tasks);
+        this.tasks = new LocalList<>(tasks);
         //默认获取10条task返回
         return GsonUtil.toJson(this.tasks.getTasks());
     }
 
-    public String getUts() {
-        if (this.uts!=null){
-            return GsonUtil.toJson(this.uts.getTasks());
+    public String getPordTasks() {
+        if (this.prod_tasks != null) {
+            return GsonUtil.toJson(this.prod_tasks.getTasks());
         }
         //向服务端发送请求，获取返回信息
-        String result=toServer.sendPost("getMyTask",2,"");
+        String result = toServer.sendPost("getMyTask", 2, "");
         Result rsl = GsonUtil.fromJson(result, Result.class);
-        List<Ut> uts=GsonUtil.list_UtfromJson(rsl.getData());
+        List<Task> tasks = GsonUtil.list_TaskfromJson(rsl.getData());
 
-        //将所有Ut存本地
-        this.uts=new LocalList<>(uts);
+        this.prod_tasks=new LocalList<>(tasks);
+
         //默认获取10条Ut返回
-        return GsonUtil.toJson(this.uts.getTasks());
+        return GsonUtil.toJson(this.prod_tasks.getTasks());
+    }
+
+    public Task getProd_task(Task task) {
+        String result = toServer.sendPost("find_task", 2, GsonUtil.toJson(task));
+        Result rsl = GsonUtil.fromJson(result, Result.class);
+        return GsonUtil.fromJson(rsl.getData(), Task.class);
+    }
+
+    public boolean prod_startTask(Task task) {
+        String result = toServer.sendPost("startTask", 3, GsonUtil.toJson(task));
+        Result rsl = GsonUtil.fromJson(result, Result.class);
+        String data = rsl.getData();
+        return data.equals("成功");
+    }
+
+    public boolean prod_stopTask(Task task) {
+        String result = toServer.sendPost("stopTask", 3, GsonUtil.toJson(task));
+        Result rsl = GsonUtil.fromJson(result, Result.class);
+        String data = rsl.getData();
+        return data.equals("成功");
+    }
+
+    public boolean prod_endTask(Task task) {
+        String result = toServer.sendPost("endTask", 3, GsonUtil.toJson(task));
+        Result rsl = GsonUtil.fromJson(result, Result.class);
+        String data = rsl.getData();
+        return data.equals("成功");
+    }
+
+    public Task prod_makeTask(Task task) {
+        String result = toServer.sendPost("makeTask", 3, GsonUtil.toJson(task));
+        Result rsl = GsonUtil.fromJson(result, Result.class);
+        return GsonUtil.fromJson(rsl.getData(), Task.class);
+    }
+
+    public String getConsTasks() {
+        if (this.cons_tasks != null) {
+            return GsonUtil.toJson(this.cons_tasks.getTasks());
+        }
+        String result = toServer.sendPost("find_Uts", 4, "");
+        Result rsl = GsonUtil.fromJson(result, Result.class);
+        List<Task> tasks = GsonUtil.list_TaskfromJson(rsl.getData());
+        //将所有task存本地
+        this.cons_tasks = new LocalList<>(tasks);
+        //默认获取10条task返回
+        return GsonUtil.toJson(this.cons_tasks.getTasks());
     }
 }
