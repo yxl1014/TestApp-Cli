@@ -1,6 +1,10 @@
 package yxl.client.TestApp.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import yxl.client.TestApp.config.filter.XSSFilter;
+
+import javax.servlet.Filter;
 
 
 /**
@@ -22,5 +26,13 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{
+                new CharacterEncodingFilter("UTF-8", true, true),
+                new XSSFilter("/;/scripts/*;/styles/*;/images/*")
+        };
     }
 }

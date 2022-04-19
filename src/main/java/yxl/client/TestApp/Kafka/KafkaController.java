@@ -1,51 +1,42 @@
 package yxl.client.TestApp.Kafka;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-@RestController
 public class KafkaController {
 
-    @Resource
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
-
-    @RequestMapping("/topic1")
-    public String sendToTopic1(String message) {
-        kafkaTemplate.send("topic1", message).addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
-            @Override
-            public void onFailure(@NotNull Throwable ex) {
-                System.out.println("发送失败,error:"+ex.getMessage());
-            }
-
-            @Override
-            public void onSuccess(SendResult<String, Object> result) {
-                System.out.println("发送成功");
-            }
-        });
-        return message;
+    public KafkaController(KafkaTemplate<String, String> template) {
+        this.kafkaTemplate = template;
     }
 
-    @RequestMapping("/topic2")
-    public String sendToTopic2(String message) {
-        kafkaTemplate.send("topic2", message).addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
-            @Override
-            public void onFailure(@NotNull Throwable ex) {
-                System.out.println("发送失败,error:"+ex.getMessage());
-            }
+    private final Executor executor = Executors.newCachedThreadPool();
 
+    public void sendToTopic1(final String message) {
+        executor.execute(new Runnable() {
             @Override
-            public void onSuccess(SendResult<String, Object> result) {
-                System.out.println("发送成功");
+            public void run() {
+                kafkaTemplate.send("topic1", message);
             }
         });
-        return message;
+    }
+
+    public void sendToTopic2(final String message) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                kafkaTemplate.send("topic2", message);
+            }
+        });
     }
 }

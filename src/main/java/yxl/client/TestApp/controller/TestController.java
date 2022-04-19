@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import yxl.client.TestApp.Util.GsonUtil;
 import yxl.client.TestApp.Util.TlUserUtil;
+import yxl.client.TestApp.entity.Producer;
 import yxl.client.TestApp.entity.Task;
 import yxl.client.TestApp.entity.User;
 import yxl.client.TestApp.service.UserServiceImpl;
@@ -15,7 +16,7 @@ public class TestController {
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public String Index() {
         // 在 model 中添加一个名为 "user" 的 user 对象
@@ -24,10 +25,12 @@ public class TestController {
         return "success";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     @ResponseBody
-    public String login(@RequestBody User user) {
-        ;
+    public String login(/*@RequestBody String u_tel,@RequestBody String u_password*/@RequestBody User user) {
+/*        User user=new User();
+        user.setU_tel("11111111111");
+        user.setU_password("123456");*/
         User u;
         if ((u = userService.login(user)) == null) {
             return "error";
@@ -53,6 +56,13 @@ public class TestController {
         return userService.init_main();
     }
 
+
+    @RequestMapping(value = "/uplevel", method = RequestMethod.POST)
+    @ResponseBody
+    public String uplevel(@RequestBody Producer producer) {
+        return userService.uplevel(producer);
+    }
+
     @RequestMapping(value = "/prod_datas", method = RequestMethod.POST)
     @ResponseBody
     public String prod_datas() {
@@ -69,13 +79,12 @@ public class TestController {
         return GsonUtil.toJson(task);
     }
 
-    @RequestMapping(value = "/prod_makeTask", method = RequestMethod.POST)
+    @RequestMapping(value = "/prod_getTask", method = RequestMethod.POST)
     @ResponseBody
     public String makeTask(@RequestBody Task task) {
         if (task == null)
             return null;
-        Task task1 = userService.prod_makeTask(task);
-        return GsonUtil.toJson(task1);
+        return userService.prod_getTask(task);
     }
 
     @RequestMapping(value = "/prod/startTask", method = RequestMethod.POST)
@@ -94,17 +103,42 @@ public class TestController {
         return userService.prod_stopTask(task);
     }
 
-    @RequestMapping(value = "/prod/endTask", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/prod/endTask", method = RequestMethod.POST)
     @ResponseBody
     public boolean endTask(@RequestBody Task task) {
         if (task.getT_id() == null || "".equals(task.getT_id()))
             return false;
         return userService.prod_endTask(task);
-    }
+
+    }*/
 
     @RequestMapping(value = "/cons_datas", method = RequestMethod.POST)
     @ResponseBody
     public String cons_datas() {
         return userService.getConsTasks();
+    }
+
+    @RequestMapping(value = "/cons_maketask", method = RequestMethod.POST)
+    @ResponseBody
+    public String cons_makedatas(@RequestBody Task task) {
+        return userService.cmakeTask(task);
+    }
+
+    @RequestMapping(value = "/cons_starttask", method = RequestMethod.POST)
+    @ResponseBody
+    public String cons_starttask(@RequestBody Task task) {
+        return userService.cStartTask(task);
+    }
+
+    @RequestMapping(value = "/cons_stopTask", method = RequestMethod.POST)
+    @ResponseBody
+    public String cons_stopTask(@RequestBody Task task) {
+        return userService.cStopTask(task);
+    }
+
+    @RequestMapping(value = "/cons_endTask", method = RequestMethod.POST)
+    @ResponseBody
+    public String cons_endTask(@RequestBody Task task) {
+        return userService.cEndTask(task);
     }
 }

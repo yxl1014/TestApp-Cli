@@ -1,29 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>请登录</title>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src="../static/js/jquery-3.6.0-min.js"></script>
+    <script>
+        class User {
+            constructor(tel, pwd) {
+                this.u_tel = tel;
+                this.u_password = pwd;
+            }
+        }
+
+        $(function () {
+            $("#btn").click(function () {
+                var utel = $("#utel").val();
+                var upwd = $("#upwd").val();
+                /*$.ajax({
+                    url: "/login",//要请求的服务器url
+                    data: {"u_tel": utel, "u_password": upwd},//第一个name对应的是后端request.getParameter("name")的name、第二个name对应的是此js中的var name = $("#name").val();的name
+                    async: true,//是否是异步请求
+                    cache: false,//是否缓存结果
+                    contentType: "application/json;charset=utf-8",
+                    type: "POST",//请求方式
+                    dataType: "json",//服务器返回什么类型数据 text xml javascript json(javascript对象)
+                    success: function (result) {//函数会在服务器执行成功后执行，result就是服务器返回结果
+                        var u = JSON.parse(result)
+                        $("#display").html(result);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+                    }
+                });*/
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/login", true);
+                xhr.setRequestHeader("Content-type", "application/json;charset=utf-8");
+                //xhr.setRequestHeader("kbn-version", "5.3.0");
+                var obj = new User(utel,upwd);
+                xhr.send(JSON.stringify(obj));
+
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            //window.location.href = us.nextUrl;
+                            var u = JSON.parse(result)
+                            $("#display").html(u.u_tel);
+                        }
+                    }
+                };
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#logon").click(function () {
+                window.location.href = "success.html";
+            });
+        });
+    </script>
+    <title>登录</title>
 </head>
 <body>
-<form action="localhost:8080/user/login"
-      method="post">
-    <table>
-        <tr>
-            <td>用户名:</td>
-            <td><label>
-                <input type="text" name="userTel">
-            </label></td>
-        </tr>
-        <tr>
-            <td>密码:</td>
-            <td><label>
-                <input type="password" name="userPwd">
-            </label></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="登陆"></td>
-        </tr>
-    </table>
-</form>
+<h1>登录页面</h1>
+<div>电话:<input type="text" id="utel"/></div>
+<br/>
+<div>密码:<input type="text" id="upwd"/></div>
+<br/>
+<div id="display"></div>
+<div><input type="button" value="登陆" id="btn"/></div>
+<br/>
+<div><input type="button" value="注册" id="logon"/></div>
+<br/>
 </body>
 </html>

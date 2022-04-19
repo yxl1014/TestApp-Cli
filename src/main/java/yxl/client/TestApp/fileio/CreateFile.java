@@ -11,7 +11,7 @@ public class CreateFile {
 
     public File createFile(String filename) {
         String path= Objects.requireNonNull(this.getClass().getResource("/")).getPath();//获取当前路径
-        File f=new File(path+"conf/"+filename);//创建文件类
+        File f=new File(path/*+"conf/"*/+filename);//创建文件类
         if (!f.exists()){//判断该文件是否存在
             try {
                 f.createNewFile();//不存在则创建新文件
@@ -24,7 +24,7 @@ public class CreateFile {
 
     public File createTempFile(String filename){
         String path= Objects.requireNonNull(this.getClass().getResource("/")).getPath();
-        File f=new File(path+"conf/temp/"+filename);
+        File f=new File(path/*+"conf/temp/"*/+filename);
         if (!f.exists()){
             try {
                 f.createNewFile();

@@ -1,4 +1,4 @@
-package yxl.client.TestApp.Net;
+package yxl.client.TestApp.Net.ToServer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class RequestToServer {
     private FileImpl file;
 
     public String sendPost(String sufUrl, int num, String data) {
-        DataOutputStream out = null;
+        BufferedWriter out = null;
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
         try {
@@ -34,13 +34,17 @@ public class RequestToServer {
             connection.setInstanceFollowRedirects(true);
             connection.setRequestMethod("POST"); // 设置请求方式
             connection.setRequestProperty("Connection", "Keep-Alive");
-            if(!sufUrl.equals("login")||!sufUrl.equals("logon")){
+            connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+            if(!sufUrl.equals("login")&&!sufUrl.equals("logon")){
                 connection.setRequestProperty("token", file.readFile("user_token.txt").get(0));
             }
+            //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+            //            writer.write(body);
+            //            writer.close();
             connection.connect();
-            out = new DataOutputStream(connection.getOutputStream());
+            out = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), StandardCharsets.UTF_8));
             // 发送请求参数，防止中文乱码
-            out.write(data.getBytes(StandardCharsets.UTF_8));
+            out.write(data);
             // flush输出流的缓冲
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应

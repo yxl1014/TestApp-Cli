@@ -6,6 +6,7 @@
         <exploded>true</exploded>
         <module>TestApp-SpringMvc</module>
         <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
     <root id="root">
@@ -14,20 +15,16 @@
           <element id="module-output" name="TestApp-SpringMvc" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: org.springframework.kafka:spring-kafka:2.7.0" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.3.6" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-messaging:5.3.6" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.6" />
+          <element id="library" level="project" name="Maven: org.springframework.kafka:spring-kafka:2.8.1" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-messaging:5.3.14" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.14" />
           <element id="library" level="project" name="Maven: org.springframework.retry:spring-retry:1.3.1" />
           <element id="library" level="project" name="Maven: javax.annotation:javax.annotation-api:1.3.2" />
-          <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.4.20" />
-          <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.20" />
-          <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
           <element id="library" level="project" name="Maven: com.google.code.findbugs:jsr305:3.0.2" />
-          <element id="library" level="project" name="Maven: org.apache.kafka:kafka-clients:2.7.0" />
-          <element id="library" level="project" name="Maven: com.github.luben:zstd-jni:1.4.5-6" />
+          <element id="library" level="project" name="Maven: org.apache.kafka:kafka-clients:2.8.1" />
+          <element id="library" level="project" name="Maven: com.github.luben:zstd-jni:1.4.9-1" />
           <element id="library" level="project" name="Maven: org.lz4:lz4-java:1.7.1" />
-          <element id="library" level="project" name="Maven: org.xerial.snappy:snappy-java:1.1.7.7" />
+          <element id="library" level="project" name="Maven: org.xerial.snappy:snappy-java:1.1.8.1" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.30" />
           <element id="library" level="project" name="Maven: javax:javaee-api:7.0" />
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.0" />
@@ -39,8 +36,17 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.3.9" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.3.9" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.3.9" />
-          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.4.6" />
-          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.3.2" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.3.6" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.5" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0" />
+          <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.3.61" />
+          <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.3.61" />
+          <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.61" />
+          <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.0" />
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.5" />
           <element id="library" level="project" name="Maven: com.auth0:java-jwt:2.2.0" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:1.3.2" />

@@ -11,8 +11,8 @@ import java.util.Objects;
 @Component
 public class ReadFile {
     public List<String> readFile(String filename) {
-        String path= Objects.requireNonNull(this.getClass().getResource("/")).getPath();//获取当前路径
-        File file=new File(path+"conf/"+filename);//创建文件类
+        String path = Objects.requireNonNull(this.getClass().getResource("/")).getPath();//获取当前路径
+        File file = new File(path + filename);//创建文件类
         BufferedReader reader = null;
         StringBuilder data = new StringBuilder();
         try {
