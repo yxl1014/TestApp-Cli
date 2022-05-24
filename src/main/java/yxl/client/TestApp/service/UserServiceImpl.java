@@ -180,4 +180,9 @@ public class UserServiceImpl {
     }
 
 
+    public String cgetTaskResult(Task task) {
+        String result = toServer.sendPost("getTaskResult", 4, GsonUtil.toJson(task));
+        Result rsl = GsonUtil.fromJson(result, Result.class);
+        return rsl.getData();
+    }
 }

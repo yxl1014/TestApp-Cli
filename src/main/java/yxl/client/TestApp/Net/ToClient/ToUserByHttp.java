@@ -41,7 +41,7 @@ public class ToUserByHttp implements INetToUser {
         final T_result tResult = new T_result();
         //String context = adapter.getProtocolMessage(task.getT_protocol(), task.getT_context());
         try {
-            Timestamp stime = new Timestamp(new Date().getTime());
+            Timestamp stime = new Timestamp(System.currentTimeMillis());
             URL realUrl = new URL("http://" + task.getT_serverip() + ":" + task.getT_serverport() + task.getT_serverurl());
             //URL realUrl = new URL("http://127.0.0.1:9999/");
             // 打开和URL之间的连接
@@ -59,7 +59,7 @@ public class ToUserByHttp implements INetToUser {
             while ((line = in.readLine()) != null) {
                 result.append(line);
             }
-            Timestamp etime = new Timestamp(new Date().getTime());
+            Timestamp etime = new Timestamp(System.currentTimeMillis());
             tResult.setTr_utwid(utw.getUtw_id());
             tResult.setTr_uip(isa != null ? isa.getHostAddress() : null);
             tResult.setTr_uid(uid);

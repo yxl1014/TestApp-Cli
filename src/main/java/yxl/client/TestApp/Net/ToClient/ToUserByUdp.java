@@ -31,12 +31,12 @@ public class ToUserByUdp implements INetToUser {
         DatagramSocket ds = null; //建立通讯socket
         final T_result tResult = new T_result();
         try {
-            Timestamp stime = new Timestamp(new Date().getTime());
+            Timestamp stime = new Timestamp(System.currentTimeMillis());
             ds = new DatagramSocket();
             byte[] bys = task.getT_context().getBytes();
             DatagramPacket dp = new DatagramPacket(bys, bys.length, InetAddress.getByName(task.getT_serverip()), Integer.parseInt(task.getT_serverport()));//建立数据包，声明长度，接收端主机，端口号
             ds.send(dp);//发送数据
-            Timestamp etime = new Timestamp(new Date().getTime());
+            Timestamp etime = new Timestamp(System.currentTimeMillis());
             tResult.setTr_utwid(utw.getUtw_id());
             tResult.setTr_uip(isa != null ? isa.getHostAddress() : null);
             tResult.setTr_uid(uid);

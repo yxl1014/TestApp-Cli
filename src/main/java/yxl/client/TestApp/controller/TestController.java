@@ -27,16 +27,13 @@ public class TestController {
 
     @PostMapping(value = "/login")
     @ResponseBody
-    public String login(/*@RequestBody String u_tel,@RequestBody String u_password*/@RequestBody User user) {
-/*        User user=new User();
-        user.setU_tel("11111111111");
-        user.setU_password("123456");*/
+    public String login(@RequestBody User user) {
         User u;
         if ((u = userService.login(user)) == null) {
             return "error";
         }
         TlUserUtil.setThreadLocal(u);
-        return /*"main"*/GsonUtil.toJson(u);//返回登录完成之后的主页面
+        return GsonUtil.toJson(u);//返回登录完成之后的主页面
     }
 
     @RequestMapping(value = "/logon", method = RequestMethod.POST)
@@ -44,7 +41,7 @@ public class TestController {
     public String logon(@RequestBody User user) {
         String data = userService.logon(user);
         if ("成功".equals(data)) {
-            return "login";
+            return "ok";
         } else {
             return data;
         }
@@ -140,5 +137,11 @@ public class TestController {
     @ResponseBody
     public String cons_endTask(@RequestBody Task task) {
         return userService.cEndTask(task);
+    }
+
+    @RequestMapping(value = "/cons_getTaskResult", method = RequestMethod.POST)
+    @ResponseBody
+    public String cons_getTaskResult(@RequestBody Task task) {
+        return userService.cgetTaskResult(task);
     }
 }

@@ -35,7 +35,7 @@ public class ToUserByTcp implements INetToUser {
         InputStream inputStream = null;
         final T_result tResult = new T_result();
         try {
-            Timestamp stime = new Timestamp(new Date().getTime());
+            Timestamp stime = new Timestamp(System.currentTimeMillis());
             client = new Socket(task.getT_serverip(), Integer.parseInt(task.getT_serverport()));
             outputStream = client.getOutputStream();
             String message = task.getT_context();
@@ -49,7 +49,7 @@ public class ToUserByTcp implements INetToUser {
                 //注意指定编码格式，发送方和接收方一定要统一，建议使用UTF-8
                 result.append(new String(bytes, 0, len, "UTF-8"));
             }
-            Timestamp etime = new Timestamp(new Date().getTime());
+            Timestamp etime = new Timestamp(System.currentTimeMillis());
             tResult.setTr_utwid(utw.getUtw_id());
             tResult.setTr_uip(isa != null ? isa.getHostAddress() : null);
             tResult.setTr_uid(uid);
