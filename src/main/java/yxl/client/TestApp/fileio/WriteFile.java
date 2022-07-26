@@ -41,7 +41,7 @@ public class WriteFile {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(f,true));
-            writer.write(data+"$EOF#");
+            writer.write(data+"_EOF_");
             //关闭流
             writer.close();
             isok = true;

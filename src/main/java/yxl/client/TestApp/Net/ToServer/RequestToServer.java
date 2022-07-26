@@ -15,8 +15,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class RequestToServer {
     private static final String _URL = "http://localhost:8080/";
-    /*public static String userToken = null;
-    public static String problemName = null;*/
+
     @Autowired
     private FileImpl file;
 
@@ -38,9 +37,6 @@ public class RequestToServer {
             if(!sufUrl.equals("login")&&!sufUrl.equals("logon")){
                 connection.setRequestProperty("token", file.readFile("user_token.txt").get(0));
             }
-            //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-            //            writer.write(body);
-            //            writer.close();
             connection.connect();
             out = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), StandardCharsets.UTF_8));
             // 发送请求参数，防止中文乱码
